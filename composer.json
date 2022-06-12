@@ -1,0 +1,31 @@
+{
+    "name": "phel-lang/phel-normalized-internal",
+    "keywords": ["phel","lisp","functional","language"],
+    "homepage": "https://phel-lang.org/",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0",
+        "ext-json": "*",
+        "phel-lang/phel-lang": "^0.7",
+        "gacela-project/gacela": "^0.17"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.23",
+        "symfony/var-dumper": "^5.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhelDoc\\": "src/php/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhelDocTests\\": "tests/php"
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
+    }
+}
