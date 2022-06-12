@@ -8,12 +8,12 @@ use Gacela\Framework\AbstractFacade;
 use PhelNormalizedInternal\Transfer\NormalizedPhelFunction;
 
 /**
- * @method \PhelNormalizedInternal\PhelNormalizedInternalFactory getFactory()
+ * @method PhelNormalizedInternalFactory getFactory()
  */
-final class PhelNormalizedInternalFacade extends AbstractFacade
+final class PhelNormalizedInternalFacade extends AbstractFacade implements PhelNormalizedInternalFacadeInterface
 {
     /**
-     * @return array<string,NormalizedPhelFunction>
+     * @return array<string,list<NormalizedPhelFunction>>
      */
     public function getNormalizedGroupedFunctions(): array
     {
