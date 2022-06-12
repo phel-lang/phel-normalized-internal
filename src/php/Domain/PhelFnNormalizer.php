@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhelDoc\PhelNormalizedInternalFunctions\Domain;
+namespace PhelNormalizedInternal\Domain;
 
 use Phel\Lang\Keyword;
+use PhelNormalizedInternal\Infrastructure\PhelFnLoaderInterface;
+use PhelNormalizedInternal\Transfer\NormalizedPhelFunction;
 
 final class PhelFnNormalizer implements PhelFnNormalizerInterface
 {
@@ -16,9 +18,9 @@ final class PhelFnNormalizer implements PhelFnNormalizerInterface
     }
 
     /**
-     * @return array<string,array{fnName:string,doc:string,fnSignature:string,desc:string}>
+     * @return array<string,NormalizedPhelFunction>
      */
-    public function getNormalizedGroupedPhelFns(): array
+    public function getNormalizedGroupedFunctions(): array
     {
         $normalizedData = $this->phelFnLoader->getNormalizedPhelFunctions();
 
@@ -39,16 +41,21 @@ final class PhelFnNormalizer implements PhelFnNormalizerInterface
             $pattern = '#(```phel\n(?<fnSignature>.*)\n```\n)?(?<desc>.*)#s';
             preg_match($pattern, $doc, $matches);
 
-            $result[strtolower(rtrim($groupKey, '-'))][] = [
-                'fnName' => $fnName,
-                'doc' => $doc,
-                'fnSignature' => $matches['fnSignature'] ?? '',
-                'desc' => $this->formatDescription($matches['desc'] ?? ''),
-            ];
+            $result[strtolower(rtrim($groupKey, '-'))][] = new NormalizedPhelFunction(
+                $fnName,
+                $doc,
+                $matches['fnSignature'] ?? '',
+                $this->formatDescription($matches['desc'] ?? ''),
+            );
         }
 
         foreach ($result as $values) {
-            usort($values, static fn (array $a, array $b) => $a['fnName'] <=> $b['fnName']);
+            usort(
+                $values,
+                static function (NormalizedPhelFunction $a, NormalizedPhelFunction $b) {
+                    return $a->fnName() <=> $b->fnName();
+                }
+            );
         }
 
         return $result;

@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PhelDocTests\PhelNormalizedInternalFunctions\Domain;
+namespace PhelNormalizedInternalTests\Domain;
 
 use Phel\Lang\Collections\Map\PersistentMapInterface;
-use PhelDoc\PhelNormalizedInternalFunctions\Domain\PhelFnLoaderInterface;
-use PhelDoc\PhelNormalizedInternalFunctions\Domain\PhelFnNormalizer;
+use PhelNormalizedInternal\Domain\PhelFnNormalizer;
+use PhelNormalizedInternal\Infrastructure\PhelFnLoaderInterface;
+use PhelNormalizedInternal\Transfer\NormalizedPhelFunction;
 use PHPUnit\Framework\TestCase;
 
 final class PhelFnNormalizerTest extends TestCase
@@ -19,20 +20,20 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'fn-name' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_group_key_functions_in_different_groups(): void
@@ -44,28 +45,28 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'fn-name-1' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name-1',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
             'fn-name-2' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name-2',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_group_key_functions_in_same_group_with_question_mark(): void
@@ -77,26 +78,26 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'fn-name' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
-                [
+                ]),
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name?',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_group_key_functions_in_same_group_with_minus(): void
@@ -108,26 +109,26 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'fn-name' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name?',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
-                [
+                ]),
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name-',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_group_key_functions_in_same_group_with_upper_case(): void
@@ -139,26 +140,26 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'fn-name' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'fn-name-',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
-                [
+                ]),
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'FN-NAME',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_skip_private_symbol(): void
@@ -175,7 +176,7 @@ final class PhelFnNormalizerTest extends TestCase
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
 
-        self::assertEmpty($normalizer->getNormalizedGroupedPhelFns());
+        self::assertEmpty($normalizer->getNormalizedGroupedFunctions());
     }
 
     public function test_symbol_without_doc(): void
@@ -192,20 +193,20 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'compile-mode' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => '*compile-mode*',
                     'doc' => '',
                     'fnSignature' => '',
                     'desc' => '',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_symbol_with_doc_and_desc(): void
@@ -225,20 +226,20 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'nan' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'NAN',
                     'doc' => 'Constant for Not a Number (NAN) values.',
                     'fnSignature' => '',
                     'desc' => 'Constant for Not a Number (NAN) values.',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_symbol_with_doc_and_desc_and_signature(): void
@@ -258,20 +259,20 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'array' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'array',
                     'doc' => "```phel\n(array & xs)\n```\nCreates a new Array.",
                     'fnSignature' => '(array & xs)',
                     'desc' => 'Creates a new Array.',
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     public function test_symbol_with_desc_with_link(): void
@@ -291,19 +292,19 @@ final class PhelFnNormalizerTest extends TestCase
         ]);
 
         $normalizer = new PhelFnNormalizer($phelFnLoader);
-        $actual = $normalizer->getNormalizedGroupedPhelFns();
+        $actual = $normalizer->getNormalizedGroupedFunctions();
 
         $expected = [
             'format' => [
-                [
+                NormalizedPhelFunction::fromArray([
                     'fnName' => 'format',
                     'doc' => "Returns a formatted string. See PHP's [sprintf](http://...) for more information.",
                     'fnSignature' => '',
                     'desc' => "Returns a formatted string. See PHP's <i>sprintf</i> for more information.",
-                ],
+                ]),
             ],
         ];
 
-        self::assertSame($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

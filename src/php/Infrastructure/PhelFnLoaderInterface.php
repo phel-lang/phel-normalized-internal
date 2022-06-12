@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhelDoc\PhelNormalizedInternalFunctions\Domain;
+namespace PhelNormalizedInternal\Infrastructure;
 
 use Phel\Lang\Collections\Map\PersistentMapInterface;
 

@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace PhelDoc\PhelNormalizedInternalFunctions\Infrastructure;
+namespace PhelNormalizedInternal\Infrastructure;
 
 use Phel\Lang\Collections\Map\PersistentMapInterface;
 use Phel\Lang\Registry;
 use Phel\Lang\TypeFactory;
 use Phel\Run\RunFacade;
-use PhelDoc\PhelNormalizedInternalFunctions\Domain\PhelFnLoaderInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 

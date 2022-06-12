@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace PhelDoc\PhelNormalizedInternalFunctions;
+namespace PhelNormalizedInternal;
 
 use Gacela\Framework\AbstractDependencyProvider;
 use Gacela\Framework\Container\Container;
 use Phel\Run\RunFacade;
 
 /**
- * @method Factory getFactory()
+ * @method PhelNormalizedInternalFactory getFactory()
  */
-final class DependencyProvider extends AbstractDependencyProvider
+final class PhelNormalizedInternalDependencyProvider extends AbstractDependencyProvider
 {
     public const FACADE_PHEL_RUN = 'FACADE_PHEL_RUN';
 
