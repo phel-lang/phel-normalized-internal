@@ -18,7 +18,7 @@ final class PhelFnNormalizer implements PhelFnNormalizerInterface
     }
 
     /**
-     * @return array<string,NormalizedPhelFunction>
+     * @return array<string,list<NormalizedPhelFunction>>
      */
     public function getNormalizedGroupedFunctions(): array
     {

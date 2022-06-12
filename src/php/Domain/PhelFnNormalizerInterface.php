@@ -9,7 +9,7 @@ use PhelNormalizedInternal\Transfer\NormalizedPhelFunction;
 interface PhelFnNormalizerInterface
 {
     /**
-     * @return array<string,NormalizedPhelFunction>
+     * @return array<string,list<NormalizedPhelFunction>>
      */
     public function getNormalizedGroupedFunctions(): array;
 }
