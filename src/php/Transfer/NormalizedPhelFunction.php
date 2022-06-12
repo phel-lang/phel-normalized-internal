@@ -17,10 +17,10 @@ final class NormalizedPhelFunction
     public static function fromArray(array $array): self
     {
         return new self(
-            $array['fnName'],
-            $array['doc'],
-            $array['fnSignature'],
-            $array['desc'],
+            $array['fnName'] ?? '',
+            $array['doc'] ?? '',
+            $array['fnSignature'] ?? '',
+            $array['desc'] ?? '',
         );
     }
 
