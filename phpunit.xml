@@ -18,10 +18,10 @@
 
     <testsuites>
         <testsuite name="unit">
-            <directory suffix="Test.php">tests/php/Domain</directory>
+            <directory suffix="Test.php">tests/Unit</directory>
         </testsuite>
         <testsuite name="feature">
-            <directory suffix="Test.php">tests/php/Feature</directory>
+            <directory suffix="Test.php">tests/Feature</directory>
         </testsuite>
     </testsuites>
 

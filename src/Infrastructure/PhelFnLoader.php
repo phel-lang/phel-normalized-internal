@@ -54,7 +54,7 @@ final class PhelFnLoader implements PhelFnLoaderInterface
         }
 
         $this->runFacade->getRunCommand()->run(
-            new ArrayInput(['path' => __DIR__ . '../../phel/doc.phel']),
+            new ArrayInput(['path' => __DIR__ . '/phel/doc.phel']),
             new ConsoleOutput()
         );
 

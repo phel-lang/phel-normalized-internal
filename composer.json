@@ -17,12 +17,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PhelNormalizedInternal\\": "src/php/"
+            "PhelNormalizedInternal\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PhelNormalizedInternalTests\\": "tests/php/"
+            "PhelNormalizedInternalTests\\": "tests/"
         }
     },
     "scripts": {
