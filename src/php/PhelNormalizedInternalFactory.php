@@ -11,9 +11,6 @@ use PhelNormalizedInternal\Domain\PhelFnNormalizerInterface;
 use PhelNormalizedInternal\Infrastructure\PhelFnLoader;
 use PhelNormalizedInternal\Infrastructure\PhelFnLoaderInterface;
 
-/**
- * @method PhelNormalizedInternalConfig getConfig()
- */
 final class PhelNormalizedInternalFactory extends AbstractFactory
 {
     public function createPhelFnNormalizer(): PhelFnNormalizerInterface
@@ -27,7 +24,6 @@ final class PhelNormalizedInternalFactory extends AbstractFactory
     {
         return new PhelFnLoader(
             $this->getRunFacade(),
-            $this->getConfig()->getAppRootDir()
         );
     }
 
